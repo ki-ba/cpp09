@@ -21,23 +21,27 @@ Database::Database(std::string filename)
 {
 	std::string cur_line;
 	std::ifstream db_file(filename.c_str());
+	int	is_first_line = 0;
 
 	if (!db_file.is_open())
 		throw std::runtime_error("Can't open database");
 
-	std::getline(db_file, cur_line);
+	// std::getline(db_file, cur_line);
 	for (std::string cur_line; std::getline(db_file, cur_line);)
 	{
+		if (is_first_line++ && cur_line == "date, exchange_rate")
+			continue;
 		try
 		{
-		this->addEntry(cur_line);
+			this->addEntry(cur_line);
 		}
 		catch (std::runtime_error &e)
 		{
-			std::cerr << "Error : " << e.what() << std::endl;
+			std::cerr << "[db] Error : " << e.what() << std::endl;
 		}
 	}
 }
+
 Database::~Database() {}
 
 void Database::addEntry(const std::string entry)
@@ -45,10 +49,10 @@ void Database::addEntry(const std::string entry)
 	size_t	delim_index = entry.find(',');
 	std::string str_date = entry.substr(0, delim_index);
 	std::string str_val = entry.substr(delim_index + 1);
-	char str_time[50];
-	char time_check[50];
+	char str_time[50] = {0};
+	char time_check[50] = {0};
 
-	struct tm datetime;
+	struct tm datetime = {0,0,0,0,0,0,0,0,0,0,0};
 
 	strptime(str_date.c_str(), "%Y-%m-%d", &datetime);
 	strftime(time_check, 50, "%Y-%m-%d", &datetime);
@@ -73,7 +77,6 @@ void Database::displayEntries()
 
 double	Database::getBTCPrice(const std::string date) const
 {
-
 	std::map<std::string, double>::const_iterator it = this->prices.lower_bound(date);
 	if (date != it->first)
 	{

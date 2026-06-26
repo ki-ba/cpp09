@@ -1,0 +1,4 @@
+mkdir -p .obj/
+c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g -Iinc/ -c src/main.cpp -o .obj/main.o
+c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g -Iinc/ -c src/RPN.cpp -o .obj/RPN.o
+c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g .obj/main.o .obj/RPN.o -o rpn

@@ -1,0 +1,42 @@
+[
+ {
+  "directory": "/home/kbarru/Documents/5_ms/cpp09/ex01",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iinc/",
+   "-std=c++98",
+   "-MMD",
+   "-MP",
+   "-g",
+   "-Iinc/",
+   "-c",
+   "src/main.cpp",
+   "-o",
+   ".obj/main.o"
+  ],
+  "file": "src/main.cpp"
+ },
+ {
+  "directory": "/home/kbarru/Documents/5_ms/cpp09/ex01",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Iinc/",
+   "-std=c++98",
+   "-MMD",
+   "-MP",
+   "-g",
+   "-Iinc/",
+   "-c",
+   "src/RPN.cpp",
+   "-o",
+   ".obj/RPN.o"
+  ],
+  "file": "src/RPN.cpp"
+ }
+]

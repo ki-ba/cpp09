@@ -26,17 +26,23 @@ void Interpreter::readDatabase(Database db)
 {
 	for (std::string cur_line; std::getline(this->file, cur_line);)
 	{
-		std::string	str_date;
-		double		amount;
-		double		total;
-		char		time_check[50];
+		std::string	str_date = "";
+		double		amount = 0;
+		double		total = 0;
+		char		time_check[50] = {0};
+		int			is_first_line = 0;
 
-		struct tm	datetime;
+		struct tm	datetime = {0,0,0,0,0,0,0,0,0,0,0};
 
+		if (is_first_line++ == 0 && cur_line == "date | value" )
+		{
+			std::cerr << "[user file] ignoring first format line" << std::endl;
+			continue;
+		}
 		size_t	delim = cur_line.find('|');
 		if (delim == str_date.npos)
 		{
-			std::cerr << "Error : Incorrect line detected" << std::endl;
+			std::cerr << "[user file] Error : Incorrect line detected" << std::endl;
 			continue;
 		}
 		str_date = cur_line.substr(0, delim);
@@ -47,13 +53,13 @@ void Interpreter::readDatabase(Database db)
 
 		if (std::string(time_check) != str_date)
 		{
-			std::cerr << "Error : Invalid date" << std::endl;
+			std::cerr << "[user file] Error : Invalid date" << std::endl;
 			continue;
 		}
 		amount = atof(cur_line.substr(delim + 1).c_str());
 		if (amount < 0)
 		{
-			std::cerr << "Error : Amount can't be negative" << std::endl;
+			std::cerr << "[user file] Error : Amount can't be negative" << std::endl;
 			continue;
 		}
 		try
@@ -63,7 +69,7 @@ void Interpreter::readDatabase(Database db)
 		}
 		catch (std::runtime_error &e)
 		{
-			std::cerr << "Error : " << e.what() << std::endl;
+			std::cerr << "[user file] Error : " << e.what() << std::endl;
 			continue;
 		}
 	}
