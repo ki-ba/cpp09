@@ -8,70 +8,151 @@
 class PmergeMe {
 
 public:
-	template<typename T> T fordJohnson(T list)
+	static void printVec(std::vector<int> v)
 	{
-		T winChain, loseChain;
-		winChain = list;
-
-		std::cout << "winChain :" << std::endl;
-		for (size_t i = 0; i < winChain.size(); i++)
+		std::cout << "[";
+		for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
 		{
-			std::cout << winChain[i] << std::endl;
+			std::cout << *it;
+			if (it + 1 != v.end())
+				std::cout << ";";
 		}
-
-		pairAndSplit(winChain, loseChain);
-		return winChain;
+		std::cout << "]" << std::endl;
 	}
 
+	template<typename T> T fordJohnson(T data)
+	{
+
+		std::vector<int> indices;
+
+		for (size_t i = 0; i < data.size(); i++)
+		{
+			std::cout << data[i] << std::endl;
+			indices.push_back(i);
+		}
+
+		indices = pairAndSplit(data, indices);
+
+		for (size_t i = 0; i < indices.size(); i++)
+		{
+			std::cout << data[indices[i]] << std::endl;
+		}
+		return indices;
+	}
 
 private:
 	std::vector<int> createJacobSthalSequence(int range);
 	template<typename T> T insertInChain(T chain, float number);
 
-	template<typename T> T pairAndSplit(T winChain, T &loseChain)
+	std::vector<int> pairAndSplit(std::vector<int> data, std::vector<int> indices)
 	{
-		T newWinChain;
-		T newLoseChain;
-		
-		if (winChain.size() == 1)
-			return (winChain);
-		std::cout << "pair and Split" << std::endl;
+		if (indices.size() == 1)
+			return (indices);
 
-		for (size_t i = 0; i < winChain.size() - 1; i +=2)
+		/* contains pairs of indexes for the current recursion level.*/
+
+		/* winChain and loseChain contain indices of their corresponding value in data[]. */
+
+		std::vector<int>	winChain;
+		std::vector<int>	loseChain;
+
+		std::cout << "pairAndSplit with indices :";
+		printVec(indices);
+		int straggler = -1;
+		bool hasStraggler = false;
+		if (indices.size() % 2 != 0)
 		{
-			if (winChain[i] < winChain[i + 1])
+			straggler = indices.back();
+			hasStraggler = true;
+			indices.pop_back();
+		}
+
+		for (size_t i = 0; i < indices.size() - 1; i +=2)
+		{
+			std::pair<int, int> p;
+
+			// std::cout << "data:";
+			// printVec(data);
+			// std::cout << "winchain";
+			// printVec(winChain);
+			// std::cout << "indices :";
+			// printVec(indices);
+
+			if (data[indices[i]] < data[indices[i+1]])
 			{
-				newWinChain.push_back(winChain[i + 1]);
-				newLoseChain.push_back(winChain[i]);
-				if (loseChain.size() >= 2)
-					std::swap(loseChain[i], loseChain[i + 1]);
+				p.first = i;
+				p.second = i + 1;
+				winChain.push_back(indices[i + 1]);
+				loseChain.push_back(indices[i]);
+				std::cout << "index " << indices[i] << "(value " << data[indices[i]] << ") lost to index " << indices[i + 1] << " (value " << data[indices[i + 1]] <<  ")" << std::endl;
 			}
 			else
 			{
-				newWinChain.push_back(winChain[i]);
-				newLoseChain.push_back(winChain[i + 1]);
+				p.first = i + 1;
+				p.second = i;
+				winChain.push_back(indices[i]);
+				loseChain.push_back(indices[i + 1]);
+				std::cout << "index " << indices[i + 1] << "(value " << data[indices[i + 1]] << ") lost to index " << indices[i] << " (value " << data[indices[i]] << ")" << std::endl;
 			}
 		}
 
-		pairAndSplit(newWinChain, newLoseChain);
-		T loseChainCopy(newLoseChain);
-		std::vector<int> jacobSthalSeq = createJacobSthalSequence(newLoseChain.size());
-		size_t	loseSize = loseChain.size() - 1;
-		size_t index = winChain.upper_bound(jacobSthalSeq[0], 0);
-		newWinChain.insert(index, newLoseChain[index]);
-		size_t	left_limit = 0;
-		while (loseSize > 0)
+		winChain = pairAndSplit(data, winChain);
+
+		/* insert the losers in a newWinChain to avoid losing loser / winner bond */
+		std::vector<int> newWinChain(winChain); std::cout << "Winchain before insertions : ";
+		printVec(newWinChain);
+
+		std::vector<int> jacobSthalSeq = createJacobSthalSequence(loseChain.size()); // 0, 1, 3, 2, 5, 4 etc
+		
+		std::cout << "Loser chain size : " << loseChain.size() << std::endl;
+		for (std::vector<int>::iterator currentLoserIndex = jacobSthalSeq.begin(); currentLoserIndex != jacobSthalSeq.end(); ++currentLoserIndex)
 		{
-			size_t n = loseChain.size() - loseSize; // used to advance inside jacob seq
-			index = winChain.upper_bound(jacobSthalSeq[n], 0);
-			while (index > left_limit)
+			// For each number in jacob sequence,
+			// take the corresponding value in loseChain (which is the index in data to the losing number)
+			// and perform a binary search in winChain to know where to put it.
+			// The binary search needs to compare the actual values (in data) in order to put the losing index in the correct
+			// spot in winChain.
+			// The binary search is always performed between winChain[0] and winChain[k] where k is the index of current loser's bonded winner.
+			// std::find() can be used to find the bonded winner in the now-modified winChain, byut in order to do this we need to know the actual winner value.
+			//
+			int winnerIdx = winChain[*currentLoserIndex];
+			std::vector<int>::iterator bondedWinner = std::find(newWinChain.begin(), newWinChain.end(), winnerIdx);
+
+			std::cout << "upper bound in newWinChain between " << *newWinChain.begin() << " and " << *bondedWinner << std::endl;
+			std::cout << "inserting loser " << *(loseChain.begin() + *currentLoserIndex) << " (value "<< data[*currentLoserIndex] << ") in winChain" << std::endl;
+
+
+			std::vector<int>::iterator low = newWinChain.begin();
+			std::vector<int>::iterator high = bondedWinner;
+			while (low != high)
 			{
-				newWinChain.insert(index, newLoseChain[index]);
-				--loseSize;
-				--n;
+				int difference = high - low;
+				std::vector<int>::iterator mid = low + difference / 2;
+				if (data[*mid] < data[loseChain[*currentLoserIndex]])
+					low += difference / 2;
+				else
+					high = low + difference / 2;
 			}
-			left_limit = jacobSthalSeq[n];
+			newWinChain.insert(low, loseChain[*currentLoserIndex]);
+
 		}
+		if (hasStraggler)
+		{
+			std::vector<int>::iterator low = newWinChain.begin();
+			std::vector<int>::iterator high = newWinChain.end();
+			while (low != high)
+			{
+				int difference = high - low;
+				std::vector<int>::iterator mid = low + difference / 2;
+				if (data[*mid] < data[straggler])
+					low = mid + 1;
+				else
+					high = mid;
+			}
+			newWinChain.insert(low, straggler);
+		}
+
+		return (newWinChain);
 	}
 };
 
