@@ -65,6 +65,8 @@ void Interpreter::readDatabase(Database db)
 		try
 		{
 			total = db.getValue(str_date, amount);
+			if (total < 0)
+				throw (std::runtime_error("Overflow detected"));
 			std::cout << str_date << " => " << amount << " : " << total << std::endl;
 		}
 		catch (std::runtime_error &e)

@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdexcept>
 #define USAGE "usage : ./btc <amounts_file>"
 #define USAGE_RETURN_VALUE 2
+#define ERR_RETURN_VALUE 1
 #define DATABASE_FILENAME "data.csv"
 
-#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include "Database.hpp"
@@ -33,11 +34,19 @@ int main(int argc, char *argv[])
 		return (usage(USAGE_RETURN_VALUE));
 	
 	std::string filename(argv[1]);
-	Interpreter interpreter(filename);
-	Database db(DATABASE_FILENAME);
+	try
+	{
+		Interpreter interpreter(filename);
+		Database db(DATABASE_FILENAME);
+		interpreter.readDatabase(db);
+	}
+	catch (std::runtime_error &e)
+	{
+		std::cerr << "Error : " << e.what() << std::endl;
+		return (ERR_RETURN_VALUE);
+	}
 
 	std::cout << std::endl << std::endl;
 
-	interpreter.readDatabase(db);
 	return (0);
 }

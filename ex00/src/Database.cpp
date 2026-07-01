@@ -21,16 +21,20 @@ Database::Database(std::string filename)
 {
 	std::string cur_line;
 	std::ifstream db_file(filename.c_str());
-	int	is_first_line = 0;
+	bool is_first_line = true;
 
 	if (!db_file.is_open())
 		throw std::runtime_error("Can't open database");
 
-	// std::getline(db_file, cur_line);
 	for (std::string cur_line; std::getline(db_file, cur_line);)
 	{
-		if (is_first_line++ && cur_line == "date, exchange_rate")
+		if (cur_line == "date,exchange_rate" && is_first_line)
+		{
+			is_first_line = false;
 			continue;
+		}
+
+		is_first_line = false;
 		try
 		{
 			this->addEntry(cur_line);
@@ -58,7 +62,7 @@ void Database::addEntry(const std::string entry)
 	strftime(time_check, 50, "%Y-%m-%d", &datetime);
 
 	if (std::string(time_check) != str_date)
-		throw std::runtime_error("Invalid date");
+		throw std::runtime_error("Invalid date : " + str_date);
 	if (atof(str_val.c_str()) < 0)
 		throw std::runtime_error("Value can't be negative");
 	strftime(str_time, 50, "%Y-%m-%d", &datetime);
@@ -100,5 +104,4 @@ double	Database::getValue(const std::string date, const int amount) const
 	}
 
 	return (amount * btcValue);
-
 }
