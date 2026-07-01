@@ -5,43 +5,44 @@
  * @param range the size of the losing chain (max index of element to be inserted)
  * @returns a vector of indexes to be inserted in JacobSthal order.
  */
-std::vector<size_t> PmergeMe::createJacobSthalSequence(int range)
+std::vector<size_t> PmergeMe::createJacobSthalSequence(size_t n)
 {
-	std::vector<size_t> jacobsthalNumbers;
+	std::vector<size_t> jacob;
+	std::vector<size_t> seq;
 
-	jacobsthalNumbers.push_back(0);
 
-	/* First, generate the Jacobsthal numbers up to the range. */
+	std::cout << "running createJacob with n = " << n << std::endl;
+	/* First, generate the Jacobsthal numbers up to n. */
 
-	while (jacobsthalNumbers.back() < static_cast<size_t>(range))
+	if (n <= 1)
 	{
-		if (jacobsthalNumbers.size() == 1)
-			jacobsthalNumbers.push_back(1);
-		else
-		{
-			int nextNumber = jacobsthalNumbers[jacobsthalNumbers.size() - 1] + jacobsthalNumbers[jacobsthalNumbers.size() - 2] * 2;
-			jacobsthalNumbers.push_back(nextNumber);
-		}
+		std::cout << "insertion sequence : ";
+		printVec(seq);
+		return seq;
 	}
+	jacob.push_back(1);
+	jacob.push_back(3);
+
+	while (jacob.back() < n - 1)
+		jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
 
 	/* Then, generate the Jacobsthal insertion sequence. */
 
-	std::vector<size_t> insertionSequence;
-	insertionSequence.push_back(0);
+	size_t	prev = 0;
 
-	for (size_t i = 1; i < jacobsthalNumbers.size(); i++)
+	for (size_t i = 0; i < jacob.size(); ++i)
 	{
-		for (size_t j = jacobsthalNumbers[i]; j > jacobsthalNumbers[i - 1] && insertionSequence.size() < static_cast<size_t>(range); j--)
-			insertionSequence.push_back(std::min(j, static_cast<size_t>(range - 1)));
+		size_t	hi = std::min(jacob[i], n - 1);
+		for (size_t j = hi; j > prev; --j)
+			seq.push_back(j);
+		if (hi >= n - 1)
+			break;
+		prev = jacob[i];
 	}
 
-	while (insertionSequence.size() > static_cast<size_t>(range))
-		insertionSequence.pop_back();
-
-
 	// std::cout << "jacob : ";
-	// printVec(jacobsthalNumbers);
-	// std::cout << "insertion sequence : ";
-	// printVec(insertionSequence);
-	return (insertionSequence);
+	// printVec(jacob);
+	std::cout << "insertion sequence : ";
+	printVec(seq);
+	return (seq);
 }
