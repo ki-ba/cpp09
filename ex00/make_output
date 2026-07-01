@@ -1,4 +1,0 @@
-mkdir -p .obj/
-c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g -Iinc/ -c src/main.cpp -o .obj/main.o
-c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g -Iinc/ -c src/Database.cpp -o .obj/Database.o
-c++ -Wall -Wextra -Werror -Iinc/ -std=c++98 -MMD -MP -g .obj/main.o .obj/Database.o -o btc
