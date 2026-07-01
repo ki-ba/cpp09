@@ -1,6 +1,6 @@
 NAME = btc
 CC = c++
-FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP -g
+FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP
 STD = -std=c++98
 
 SRC_DIR = src/
