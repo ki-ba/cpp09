@@ -1,40 +1,64 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#define USAGE_ERR 2
+#define STUPID_ERROR 3
+#define ASCII_ART_NEGATIVES "⡴⠒⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠉⠳⡆\n⣇⠰⠉⢙⡄⠀⠀⣴⠖⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠁⠙⡆\n⠘⡇⢠⠞⠉⠙⣾⠃⢀⡼⠀⠀⠀⠀⠀⠀⠀⢀⣼⡀⠄⢷⣄⣀⠀⠀⠀⠀⠀⠀⠀⠰⠒⠲⡄⠀⣏⣆⣀⡍\n⠀⢠⡏⠀⡤⠒⠃⠀⡜⠀⠀⠀⠀⠀⢀⣴⠾⠛⡁⠀⠀⢀⣈⡉⠙⠳⣤⡀⠀⠀⠀⠘⣆⠀⣇⡼⢋⠀⠀⢱\n⠀⠘⣇⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⡴⢋⡣⠊⡩⠋⠀⠀⠀⠣⡉⠲⣄⠀⠙⢆⠀⠀⠀⣸⠀⢉⠀⢀⠿⠀⢸\n⠀⠀⠸⡄⠀⠈⢳⣄⡇⠀⠀⢀⡞⠀⠈⠀⢀⣴⣾⣿⣿⣿⣿⣦⡀⠀⠀⠀⠈⢧⠀⠀⢳⣰⠁⠀⠀⠀⣠⠃\n⠀⠀⠀⠘⢄⣀⣸⠃⠀⠀⠀⡸⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠈⣇⠀⠀⠙⢄⣀⠤⠚⠁⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⢹⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⢘⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⢰⣿⣿⣿⡿⠛⠁⠀⠉⠛⢿⣿⣿⣿⣧⠀⠀⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡀⣸⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⡀⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡇⠹⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡿⠁⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣤⣞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢢⣀⣠⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠲⢤⣀⣀⠀⢀⣀⣀⠤⠒⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n segmentation fault (core dumped)\n"
+
+
+
+#define ASCII_ART_NAN "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣦⣤⣤⣀⡀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣷⡦⣄⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠮⣷⣄⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⡿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⣿⣿⣿⣷⠖⠼⢷⡀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⡿⠟⠛⠉⠁⠀⠀⢻⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠙⠛⣿⣿⣷⢤⡀⠳⡄⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⡿⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣦⠉⠓⠃⠀⢱⡄⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣧⠀⠀⠀⠈⣇⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡜⠁⠀⠀⠀⣀⣠⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀⠸⡆\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⣰⣾⣿⣆⠀⠀⠘⣦⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⠀⠀⠀⠀⢳\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⣸⣿⣿⣿⣿⡆⠀⠀⢸⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⢸\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⣿⣿⣿⣿⣿⡇⠀⠀⣼⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⢸\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⠀⠀⠀⠀⠸⣿⣿⣿⢟⣀⡤⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠀⠀⠀⠀⣞\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠃⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⡊\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠀⠀⠀⠀⠀⡏\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠏⠀⠀⠀⠀⠀⡏\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠀⠀⠀⠀⢠⡇⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠒⠦⠤⠎⠀⠀\n⠀⠀⠀⠀⠀⠀⣠⠾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⣠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣶⣶⣶⣦⣠⡄⠀⠀⠀⠀⠀⢠⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⡰⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣿⡿⣿⣿⣿⣿⣿⣆⣀⡀⠀⠀⠀⣸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⢠⡞⠀⣴⣶⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿⣟⣾⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⣰⡋⠀⠰⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣟⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⢠⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠙⠛⠓⠶⠬⣥⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⣿⣿⣿⣿⣿⣿⣿⠿⣴⠏⠀⠀⠀⢠⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠀⣹⠟⠀⠀⠀⠀⠀⠀⠀⠀⠰⢿⡟⢿⣿⣿⢿⣿⣿⠶⠋⠀⠀⠀⢠⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⢀⡼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠓⠟⠚⠉⠀⠀⠀⠀⠀⢰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⢀⣤⡞⠛⠳⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⡞⠻⣄⠀⠀⠀⠙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⢧⡀⠈⠛⠛⠛⢛⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠈⠙⢶⣖⡖⠚⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⠴⠚⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n⠀⠀⠀⠀⠀⠀⠀⠈⠉⠓⠲⠶⠤⠤⠤⠤⠶⠶⠶⠒⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 #include <algorithm>
-#include <iterator>
 #include <vector>
+#include <deque>
+#include <iterator>
 #include <iostream>
+#include <sys/time.h>
 
 class PmergeMe
 {
 	public:
+		PmergeMe(std::vector<size_t> numbers);
 		/* Functor : used by upper_bound */
+		template <typename T>
 		struct CompareByValue
 		{
-			const std::vector<size_t>& seq;
-			CompareByValue(const std::vector<size_t>& s) : seq(s) {}
+			const T& seq;
+			CompareByValue(const T& s) : seq(s) {}
 			bool operator()(std::size_t a, std::size_t b) const {
 				return seq[a] < seq[b];
 			}
 		};
 
-		static void printVec(std::vector<size_t> v)
+		long getElapsedTime() const
+		{
+			return (end_time.tv_sec - start_time.tv_sec) * 1000000 + (end_time.tv_usec - start_time.tv_usec);
+		}
+
+		template<typename T> static void printVec(T v)
 		{
 			std::cout << "[";
-			for (std::vector<size_t>::iterator it = v.begin(); it != v.end(); ++it)
+			for (typename T::iterator it = v.begin(); it != v.end(); ++it)
 			{
-				std::cout << *it;
-				if (it + 1 != v.end())
-					std::cout << ";";
+				if (v.size() < 10 || std::distance(v.begin(), it) < 3 || std::distance(v.begin(), it) >= std::distance(v.begin(), v.end() - 3))
+				{
+					std::cout << *it;
+					if (it + 1 != v.end())
+						std::cout << ";";
+				}
+				else if (v.size() >= 10)
+				{
+					if (std::distance(v.begin(), it) == 10)
+						std::cout << "...;";
+				}
 			}
 			std::cout << "]" << std::endl;
 		}
 
-		static void printVec(std::vector<size_t> v, std::vector<size_t> data)
+		template<typename T> static void printVec(T v, T data)
 		{
 			std::cout << "[";
-			for (std::vector<size_t>::iterator it = v.begin(); it != v.end(); ++it)
+			for (typename T::iterator it = v.begin(); it != v.end(); ++it)
 			{
 				std::cout << *it << " (" << data[*it] << ") ";
 				if (it + 1 != v.end())
@@ -43,15 +67,54 @@ class PmergeMe
 			std::cout << "]" << std::endl;
 		}
 
+		/**
+		 * @brief creates a jacobsthal insertion sequence for a given range.
+		 * @param range the size of the losing chain (max index of element to be inserted)
+		 * @returns a vector of indexes to be inserted in JacobSthal order.
+		 */
+		template<typename T> T createJacobSthalSequence(size_t n)
+		{
+			T jacob;
+			T seq;
+
+			/* First, generate the Jacobsthal numbers up to n. */
+
+			if (n <= 1)
+				return seq;
+
+			jacob.push_back(1);
+			jacob.push_back(3);
+
+			while (jacob.back() < n - 1)
+				jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
+
+			/* Then, generate the Jacobsthal insertion sequence. */
+
+			size_t	prev = 0;
+
+			for (size_t i = 0; i < jacob.size(); ++i)
+			{
+				size_t	hi = std::min(jacob[i], n - 1);
+				for (size_t j = hi; j > prev; --j)
+					seq.push_back(j);
+				if (hi >= n - 1)
+					break;
+				prev = jacob[i];
+			}
+
+			return (seq);
+		}
+
 		template<typename T> T fordJohnson(T data)
 		{
-			std::vector<size_t> indices;
-			std::vector<size_t> sortedData;
+			gettimeofday(&start_time, NULL);
+			T indices;
+			T sortedData;
 
 			for (size_t i = 0; i < data.size(); i++)
 				indices.push_back(i);
 
-			std::cout << "Before :"; printVec(data);
+			std::cout << "Before: "; printVec(data);
 
 			indices = pairAndSplit(data, indices);
 
@@ -60,20 +123,23 @@ class PmergeMe
 
 			std::cout << "After: "; printVec(sortedData);
 
+			gettimeofday(&end_time, NULL);
 			return indices;
+
 		}
 
 	private:
-		std::vector<size_t> createJacobSthalSequence(size_t n);
-		template<typename T> T insertInChain(T chain, float number);
-
-		std::vector<size_t> pairAndSplit(std::vector<size_t> data, std::vector<size_t> indices)
+		timeval start_time;
+		timeval end_time;
+		std::vector<size_t> numbers_vector;
+		std::deque<size_t> numbers_deque;
+		template<typename T> T pairAndSplit(T data, T indices)
 		{
 			if (indices.size() == 1)
 				return (indices);
 
-			std::vector<size_t>	winChain;
-			std::vector<size_t>	loseChain;
+			T	winChain;
+			T	loseChain;
 
 			size_t	straggler = 0;
 			bool hasStraggler = indices.size() % 2 != 0;
@@ -102,16 +168,16 @@ class PmergeMe
 				}
 			}
 
-			std::vector<size_t> partnerLoser(data.size());
+			T partnerLoser(data.size());
 
 			/* Maintain the loser/winner bond by representing it by value (index in data, not position in the chain) */
 
 			for (size_t i = 0; i < winChain.size(); ++i)
 				partnerLoser[winChain[i]] = loseChain[i];
 
-			std::vector<size_t> newWinChain = pairAndSplit(data, winChain);
+			T newWinChain = pairAndSplit(data, winChain);
 
-			std::vector<size_t> orderedLosers(loseChain.size());
+			T orderedLosers(loseChain.size());
 
 			for (size_t i = 0; i < loseChain.size(); ++i)
 				orderedLosers[i] = partnerLoser[newWinChain[i]];
@@ -122,23 +188,23 @@ class PmergeMe
 
 			newWinChain.insert(newWinChain.begin(), orderedLosers[0]);
 
-			std::vector<size_t> jacobSthalSeq = createJacobSthalSequence(orderedLosers.size()); // 0, 1, 3, 2, 5, 4 etc
+			T jacobSthalSeq = createJacobSthalSequence<T>(orderedLosers.size()); // 0, 1, 3, 2, 5, 4 etc
 
-			std::vector<size_t> winnerPositions;
+			T winnerPositions;
 				
-			for(std::vector<size_t>::iterator loser = orderedLosers.begin(); loser != orderedLosers.end(); ++loser)
+			for(typename T::iterator loser = orderedLosers.begin(); loser != orderedLosers.end(); ++loser)
 				winnerPositions.push_back(std::distance(orderedLosers.begin(), loser) + 1);
 
-			for (std::vector<size_t>::iterator currentLoserIndex = jacobSthalSeq.begin(); currentLoserIndex != jacobSthalSeq.end(); ++currentLoserIndex)
+			for (typename T::iterator currentLoserIndex = jacobSthalSeq.begin(); currentLoserIndex != jacobSthalSeq.end(); ++currentLoserIndex)
 			{
 
 				size_t element = orderedLosers[*currentLoserIndex];
 				
-				std::vector<size_t>::iterator low = newWinChain.begin();
-				std::vector<size_t>::iterator high = newWinChain.begin() + winnerPositions[*currentLoserIndex];
+				typename T::iterator low = newWinChain.begin();
+				typename T::iterator high = newWinChain.begin() + winnerPositions[*currentLoserIndex];
 
-				CompareByValue comp(data);
-				std::vector<std::size_t>::iterator insertPos = std::upper_bound(low, high, element, comp);
+				CompareByValue<T> comp(data);
+				typename T::iterator insertPos = std::upper_bound(low, high, element, comp);
 		
 				size_t insertedIndex = std::distance(newWinChain.begin(), insertPos);
 				newWinChain.insert(insertPos, element);
@@ -152,8 +218,8 @@ class PmergeMe
 
 			if (hasStraggler)
 			{
-				CompareByValue comp(data);
-				std::vector<std::size_t>::iterator insertPos = std::upper_bound(newWinChain.begin(), newWinChain.end(), straggler, comp);
+				CompareByValue<T> comp(data);
+				typename T::iterator insertPos = std::upper_bound(newWinChain.begin(), newWinChain.end(), straggler, comp);
 				newWinChain.insert(insertPos, straggler);
 			}
 			return (newWinChain);

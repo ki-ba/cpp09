@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 #include <vector>
 #include "PmergeMe.hpp"
 
@@ -12,37 +13,57 @@ int usage()
 	return (2);
 }
 
+int parsing(std::stringstream &input, std::vector<size_t> &numbers)
+{
+	std::string			number_str;
+	double number;
+
+	while(std::getline(input, number_str, ' '))
+	{
+		
+		std::stringstream number_stream(number_str);
+		number_stream >> number;
+		if (number_stream.fail() || !number_stream.eof())
+		{
+			std::cout << ASCII_ART_NAN << std::endl;
+			std::cout << "me when i put a non-number in the number sorting program" << std::endl;
+			return (STUPID_ERROR);
+		}
+
+		if (number < 0)
+		{
+			std::cout << "oh no... is that... a negative number????" << std::endl;
+			sleep(2);
+			std::cout << "i can't handle this!!!" << std::endl;
+			sleep(2);
+			std::cout << ASCII_ART_NEGATIVES << std::endl;
+			sleep(3);
+			std::cout << "just kidding but stop now" << std::endl;
+			return (STUPID_ERROR);
+		}
+
+		if (std::find(numbers.begin(), numbers.end(), number) != numbers.end())
+			std::cout << "skipping duplicate number: " << number << std::endl;
+		else
+			numbers.push_back(number);
+	}
+	return (0);
+
+}
 int main(int argc, char *argv[])
 {
 	if (argc != 2)
 		return (usage());
 
-	PmergeMe			sort;
 	std::stringstream	input(argv[1]);
-	std::string			number_str;
-	double number;
+	std::vector<size_t>	numbers;
 
-	std::vector<size_t>	numbers_vector;
-	std::deque<size_t>	numbers_deque;
+	int parsingStatus = parsing(input, numbers);
 
-	while(std::getline(input, number_str, ' '))
-	{
-		std::stringstream number_stream(number_str);
-		number_stream >> number;
-		numbers_vector.push_back(number);
-		numbers_deque.push_back(number);
-	}
+	if (parsingStatus != 0)
+		return (parsingStatus);
 
-	sort.fordJohnson<std::vector<size_t> >(numbers_vector);
+	PmergeMe sorter(numbers);
 
-	// for (std::vector<double>::iterator it = numbers_vector.begin(); it != numbers_vector.end(); ++it)
-	// {
-	// 	std::cout << *it << std::endl;
-	// }
-	//
-	// for (std::deque<double>::iterator it = numbers_deque.begin(); it != numbers_deque.end(); ++it)
-	// {
-	// 	std::cout << *it << std::endl;
-	// }
 	return (0);
 }
