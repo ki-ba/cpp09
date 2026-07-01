@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <deque>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -15,8 +14,8 @@ int usage()
 
 int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 {
-	std::string			number_str;
-	double number;
+	std::string	number_str;
+	double		number;
 
 	while(std::getline(input, number_str, ' '))
 	{
@@ -43,13 +42,16 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 		}
 
 		if (std::find(numbers.begin(), numbers.end(), number) != numbers.end())
+		{
 			std::cout << "skipping duplicate number: " << number << std::endl;
-		else
-			numbers.push_back(number);
+			continue;
+		}
+		numbers.push_back(number);
 	}
 	return (0);
 
 }
+
 int main(int argc, char *argv[])
 {
 	if (argc != 2)

@@ -16,6 +16,10 @@ DEPS = $(OBJ:%.o=%.d)
 .PHONY : all
 all : $(NAME)
 
+.PHONY: test
+test : all
+	./PmergeMe "`shuf -n 3000 -i 0-99999 | tr "\n" " "`"
+
 .PHONY : clean
 clean :
 	rm -rf $(OBJ_DIR)
