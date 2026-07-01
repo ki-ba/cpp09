@@ -17,7 +17,7 @@
 #include <stdexcept>
 #include <stdlib.h>
 
-Database::Database(std::string filename)
+Database::Database(const std::string &filename)
 {
 	std::string cur_line;
 	std::ifstream db_file(filename.c_str());
@@ -48,7 +48,7 @@ Database::Database(std::string filename)
 
 Database::~Database() {}
 
-void Database::addEntry(const std::string entry)
+void Database::addEntry(const std::string &entry)
 {
 	size_t	delim_index = entry.find(',');
 	std::string str_date = entry.substr(0, delim_index);
@@ -79,7 +79,7 @@ void Database::displayEntries()
 	}	
 }
 
-double	Database::getBTCPrice(const std::string date) const
+double	Database::getBTCPrice(const std::string &date) const
 {
 	std::map<std::string, double>::const_iterator it = this->prices.lower_bound(date);
 	if (date != it->first)
@@ -91,7 +91,7 @@ double	Database::getBTCPrice(const std::string date) const
 	return (it->second);
 }
 
-double	Database::getValue(const std::string date, const int amount) const
+double	Database::getValue(const std::string &date, const int &amount) const
 {
 	int	btcValue;
 	try

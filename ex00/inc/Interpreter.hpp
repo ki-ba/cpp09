@@ -23,10 +23,10 @@ private:
 	std::ifstream	file;
 
 public:
-	Interpreter(std::string filename);
+	Interpreter(const std::string &filename);
 	~Interpreter();
-	double calculateNextValue(Database db);
-	void readDatabase(Database db);
+	double calculateNextValue(const Database &db);
+	void readDatabase(const Database &db);
 };
 
 #endif

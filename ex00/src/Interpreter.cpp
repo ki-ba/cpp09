@@ -15,14 +15,15 @@
 #include <cstdlib>
 #include <iostream>
 
-Interpreter::Interpreter(std::string filename) : file(filename.c_str())
+Interpreter::Interpreter(const std::string &filename) : file(filename.c_str())
 {
 	if (!this->file.is_open())
 		throw std::runtime_error("Can't open user file");
 }
+
 Interpreter::~Interpreter() {}
 
-void Interpreter::readDatabase(Database db)
+void Interpreter::readDatabase(const Database &db)
 {
 	for (std::string cur_line; std::getline(this->file, cur_line);)
 	{
@@ -46,7 +47,6 @@ void Interpreter::readDatabase(Database db)
 			continue;
 		}
 		str_date = cur_line.substr(0, delim);
-
 
 		strptime(str_date.c_str(), "%Y-%m-%d", &datetime);
 		strftime(time_check, 50, "%Y-%m-%d", &datetime);
