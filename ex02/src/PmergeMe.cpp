@@ -5,28 +5,43 @@
  * @param range the size of the losing chain (max index of element to be inserted)
  * @returns a vector of indexes to be inserted in JacobSthal order.
  */
-std::vector<int> PmergeMe::createJacobSthalSequence(int range)
+std::vector<size_t> PmergeMe::createJacobSthalSequence(int range)
 {
-	std::vector<int> seq;
-	seq.push_back(0);
-	if (range > 1)
-		seq.push_back(1);
-	int prev = 1;
-	int prev2 = 0;
-	for (int a = 2; a < range; ++a)
+	std::vector<size_t> jacobsthalNumbers;
+
+	jacobsthalNumbers.push_back(0);
+
+	/* First, generate the Jacobsthal numbers up to the range. */
+
+	while (jacobsthalNumbers.back() < static_cast<size_t>(range))
 	{
-		int nextNumber = prev + prev2 * 2;
-
-		for (int i = nextNumber; i > prev; --i)
+		if (jacobsthalNumbers.size() == 1)
+			jacobsthalNumbers.push_back(1);
+		else
 		{
-			seq.push_back(i);
+			int nextNumber = jacobsthalNumbers[jacobsthalNumbers.size() - 1] + jacobsthalNumbers[jacobsthalNumbers.size() - 2] * 2;
+			jacobsthalNumbers.push_back(nextNumber);
 		}
-
-		prev = seq[seq.size() - 1];
-		prev2 = seq[seq.size() - 2];
 	}
 
-	std::cout << "jacob : ";
-	printVec(seq);
-	return (seq);
+	/* Then, generate the Jacobsthal insertion sequence. */
+
+	std::vector<size_t> insertionSequence;
+	insertionSequence.push_back(0);
+
+	for (size_t i = 1; i < jacobsthalNumbers.size(); i++)
+	{
+		for (size_t j = jacobsthalNumbers[i]; j > jacobsthalNumbers[i - 1] && insertionSequence.size() < static_cast<size_t>(range); j--)
+			insertionSequence.push_back(std::min(j, static_cast<size_t>(range - 1)));
+	}
+
+	while (insertionSequence.size() > static_cast<size_t>(range))
+		insertionSequence.pop_back();
+
+
+	// std::cout << "jacob : ";
+	// printVec(jacobsthalNumbers);
+	// std::cout << "insertion sequence : ";
+	// printVec(insertionSequence);
+	return (insertionSequence);
 }

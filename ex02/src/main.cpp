@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 	std::string			number_str;
 	double number;
 
-	std::vector<int>	numbers_vector;
-	std::deque<int>	numbers_deque;
+	std::vector<size_t>	numbers_vector;
+	std::deque<size_t>	numbers_deque;
 
 	while(std::getline(input, number_str, ' '))
 	{
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 		numbers_deque.push_back(number);
 	}
 
-	sort.fordJohnson<std::vector<int> >(numbers_vector);
+	sort.fordJohnson<std::vector<size_t> >(numbers_vector);
 
 	// for (std::vector<double>::iterator it = numbers_vector.begin(); it != numbers_vector.end(); ++it)
 	// {
