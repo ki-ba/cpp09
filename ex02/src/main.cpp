@@ -19,14 +19,13 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 
 	while(std::getline(input, number_str, ' '))
 	{
-		
 		std::stringstream number_stream(number_str);
 		number_stream >> number;
 		if (number_stream.fail() || !number_stream.eof())
 		{
 			std::cout << ASCII_ART_NAN << std::endl;
 			std::cout << "me when i put a non-number in the number sorting program" << std::endl;
-			return (STUPID_ERROR);
+			return (PARSING_ERROR);
 		}
 
 		if (number < 0)
@@ -38,7 +37,7 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 			std::cout << ASCII_ART_NEGATIVES << std::endl;
 			sleep(3);
 			std::cout << "just kidding but stop now" << std::endl;
-			return (STUPID_ERROR);
+			return (PARSING_ERROR);
 		}
 
 		if (std::find(numbers.begin(), numbers.end(), number) != numbers.end())
@@ -47,7 +46,16 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 			continue;
 		}
 		numbers.push_back(number);
+
 	}
+
+	if (numbers.size() == 0)
+		{
+			std::cout << ASCII_ART_EMPTY << std::endl;
+			std::cout << "no numbers to sort" << std::endl;
+			return (PARSING_ERROR);
+		}
+
 	return (0);
 
 }
