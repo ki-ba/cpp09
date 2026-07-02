@@ -40,7 +40,8 @@ void Interpreter::readDatabase(const Database &db)
 			std::cerr << "[user file] ignoring first format line" << std::endl;
 			continue;
 		}
-		size_t	delim = cur_line.find('|');
+		size_t	delim = std::min(cur_line.find(' '), cur_line.find('|'));
+		size_t	delim2 = std::max(cur_line.rfind(' '), cur_line.rfind('|'));
 		if (delim == str_date.npos)
 		{
 			std::cerr << "[user file] Error : Incorrect line detected" << std::endl;
@@ -56,10 +57,10 @@ void Interpreter::readDatabase(const Database &db)
 			std::cerr << "[user file] Error : Invalid date" << std::endl;
 			continue;
 		}
-		amount = atof(cur_line.substr(delim + 1).c_str());
-		if (amount < 0)
+		amount = atof(cur_line.substr(delim2 + 1).c_str());
+		if (amount < 0 || amount > 1000)
 		{
-			std::cerr << "[user file] Error : Amount can't be negative" << std::endl;
+			std::cerr << "[user file] Error : amount must be between 0 and 1000" << std::endl;
 			continue;
 		}
 		try
