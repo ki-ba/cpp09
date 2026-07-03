@@ -42,7 +42,7 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 
 		if (std::find(numbers.begin(), numbers.end(), number) != numbers.end())
 		{
-			std::cout << "skipping duplicate number: " << number << std::endl;
+			std::cerr << "skipping duplicate number: " << number << std::endl;
 			continue;
 		}
 		numbers.push_back(number);
