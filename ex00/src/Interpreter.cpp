@@ -45,14 +45,15 @@ void Interpreter::readDatabase(const Database &db)
 		size_t	delim = cur_line.find('|');
 		size_t	delim2 = delim;
 
-		while (delim > 0 && cur_line[delim - 1] == ' ')
-			--delim;
 
 		if (delim == cur_line.npos)
 		{
 			std::cerr << "[user file] Error : Incorrect line detected" << std::endl;
 			continue;
 		}
+
+		while (delim > 0 && cur_line[delim - 1] == ' ')
+			--delim;
 		str_date = cur_line.substr(0, delim);
 
 
