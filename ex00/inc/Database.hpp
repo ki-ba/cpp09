@@ -28,7 +28,7 @@ public:
 	void addEntry(const std::string &entry);
 	void	displayEntries();
 	double	getBTCPrice(const std::string &date) const;
-	double	getValue(const std::string &date, const int &amount) const;
+	double	getValue(const std::string &date, const double &amount) const;
 };
 
 #endif

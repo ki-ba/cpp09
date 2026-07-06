@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Interpreter.hpp"
-#include <stdexcept>
 #include <cstdlib>
 #include <iostream>
 
@@ -40,14 +39,22 @@ void Interpreter::readDatabase(const Database &db)
 			std::cerr << "[user file] ignoring first format line" << std::endl;
 			continue;
 		}
-		size_t	delim = std::min(cur_line.find(' '), cur_line.find('|'));
-		size_t	delim2 = std::max(cur_line.rfind(' '), cur_line.rfind('|'));
-		if (delim == str_date.npos)
+
+		if (cur_line[0] == '#')
+			continue ;
+		size_t	delim = cur_line.find('|');
+		size_t	delim2 = delim;
+
+		while (delim > 0 && cur_line[delim - 1] == ' ')
+			--delim;
+
+		if (delim == cur_line.npos)
 		{
 			std::cerr << "[user file] Error : Incorrect line detected" << std::endl;
 			continue;
 		}
 		str_date = cur_line.substr(0, delim);
+
 
 		strptime(str_date.c_str(), "%Y-%m-%d", &datetime);
 		strftime(time_check, 50, "%Y-%m-%d", &datetime);
@@ -57,6 +64,10 @@ void Interpreter::readDatabase(const Database &db)
 			std::cerr << "[user file] Error : Invalid date" << std::endl;
 			continue;
 		}
+
+		while (cur_line[delim2] == ' ')
+			++delim2;
+
 		amount = atof(cur_line.substr(delim2 + 1).c_str());
 		if (amount < 0 || amount > 1000)
 		{

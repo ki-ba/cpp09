@@ -46,7 +46,5 @@ int main(int argc, char *argv[])
 		return (ERR_RETURN_VALUE);
 	}
 
-	std::cout << std::endl << std::endl;
-
 	return (0);
 }

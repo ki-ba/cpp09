@@ -91,9 +91,9 @@ double	Database::getBTCPrice(const std::string &date) const
 	return (it->second);
 }
 
-double	Database::getValue(const std::string &date, const int &amount) const
+double	Database::getValue(const std::string &date, const double &amount) const
 {
-	int	btcValue;
+	double	btcValue;
 	try
 	{
 		btcValue = this->getBTCPrice(date);
