@@ -1,5 +1,6 @@
 #include "RPN.hpp"
 #include <cctype>
+#include <cstring>
 #include <stdexcept>
 
 RPN::RPN() {}
@@ -22,6 +23,8 @@ void RPN::eatChar(char c)
 	float n2 = expr.top();
 	this->expr.pop();
 
+	if (!std::strchr("+-*/", c))
+		throw std::runtime_error("Invalid syntax : unknown symbol");
 	if (c == '*')
 		this->expr.push(n1 * n2);
 	else if (c == '/')
