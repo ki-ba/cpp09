@@ -1,13 +1,13 @@
 NAME = btc
 CC = c++
-FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP
+FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP -fsanitize=address
 STD = -std=c++98
 
 SRC_DIR = src/
 INC_DIR = inc/
 OBJ_DIR = .obj/
 
-SRC = main.cpp Database.cpp Interpreter.cpp
+SRC = main.cpp BitcoinExchange.cpp
 
 INCLUDES = -I$(INC_DIR)
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.cpp=%.o))

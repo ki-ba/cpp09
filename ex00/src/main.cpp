@@ -18,8 +18,7 @@
 
 #include <iomanip>
 #include <iostream>
-#include "Database.hpp"
-#include "Interpreter.hpp"
+#include "BitcoinExchange.hpp"
 
 int usage(int status)
 {
@@ -29,16 +28,18 @@ int usage(int status)
 
 int main(int argc, char *argv[])
 {
-	std::cout << std::setprecision(8);
+	std::cout << std::setprecision(10);
 	if (argc != 2)
 		return (usage(USAGE_RETURN_VALUE));
 	
 	std::string filename(argv[1]);
+	BitcoinExchange interpreter;
+
 	try
 	{
-		Interpreter interpreter(filename);
-		Database db(DATABASE_FILENAME);
-		interpreter.readDatabase(db);
+		
+		interpreter.readDatabase(DATABASE_FILENAME);
+		interpreter.readAmounts(filename);
 	}
 	catch (std::runtime_error &e)
 	{
