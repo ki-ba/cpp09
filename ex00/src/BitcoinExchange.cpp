@@ -82,8 +82,6 @@ void BitcoinExchange::extractComponents(std::string &line, std::string &str_date
 
 void BitcoinExchange::readDatabase(const std::string &filename)
 {
-
-	std::string cur_line;
 	std::ifstream db_file(filename.c_str());
 	bool is_first_line = true;
 
