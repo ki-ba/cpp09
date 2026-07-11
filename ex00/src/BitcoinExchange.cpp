@@ -13,9 +13,6 @@
 #include "BitcoinExchange.hpp"
 #include <fstream>
 #include <iostream>
-#include <iomanip>
-#include <stdexcept>
-#include <stdlib.h>
 
 BitcoinExchange::BitcoinExchange() {}
 

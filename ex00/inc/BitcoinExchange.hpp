@@ -1,8 +1,7 @@
-#ifndef DATABASE_HPP
-# define DATABASE_HPP
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
 
 # include <map>
-# include <string>
 
 class BitcoinExchange
 {

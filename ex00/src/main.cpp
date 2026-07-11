@@ -28,7 +28,7 @@ int usage(int status)
 
 int main(int argc, char *argv[])
 {
-	std::cout << std::setprecision(10);
+	std::cout << std::fixed << std::setprecision(2);
 	if (argc != 2)
 		return (usage(USAGE_RETURN_VALUE));
 	
