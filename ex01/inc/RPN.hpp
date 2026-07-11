@@ -10,6 +10,8 @@ private:
 	
 public:
 	RPN();
+	RPN(const RPN &other);
+	RPN &operator=(const RPN &other);
 	~RPN();
 	void	eatChar(char c);
 	float	result();

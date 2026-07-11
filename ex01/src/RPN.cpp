@@ -4,6 +4,13 @@
 #include <stdexcept>
 
 RPN::RPN() {}
+RPN::RPN(const RPN &other) : expr(other.expr) {}
+RPN &RPN::operator=(const RPN &other)
+{
+	if (this != &other)
+		this->expr = other.expr;
+	return (*this);
+}
 RPN::~RPN() {}
 
 void RPN::eatChar(char c)
