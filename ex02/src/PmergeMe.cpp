@@ -23,6 +23,25 @@ PmergeMe::PmergeMe(std::vector<size_t> &numbers)
 	std::cout << "deque time elapsed (size " << numbers_deque.size() << "): " << this->getElapsedTime() << " us" << std::endl;
 }
 
+PmergeMe::~PmergeMe() {}
+
+PmergeMe::PmergeMe() {}
+
+PmergeMe::PmergeMe(PmergeMe &other)
+{
+	*this = other;
+}
+
+PmergeMe &PmergeMe::operator=(PmergeMe &other)
+{
+	if (this != &other)
+	{
+		this->numbers_vector = other.numbers_vector;
+		this->numbers_deque = other.numbers_deque;
+	}
+	return *this;
+}
+
 long PmergeMe::getElapsedTime() const
 {
 	return (end_time.tv_sec - start_time.tv_sec) * 1000000 + (end_time.tv_usec - start_time.tv_usec);

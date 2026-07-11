@@ -30,21 +30,13 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 
 		if (number < 0)
 		{
-			std::cout << "oh no... is that... a negative number????" << std::endl;
-			sleep(2);
-			std::cout << "i can't handle this!!!" << std::endl;
-			sleep(2);
 			std::cout << ASCII_ART_NEGATIVES << std::endl;
-			sleep(3);
-			std::cout << "just kidding but stop now" << std::endl;
+			std::cout << "no negative numbers pls" << std::endl;
 			return (PARSING_ERROR);
 		}
 
 		if (std::find(numbers.begin(), numbers.end(), number) != numbers.end())
-		{
-			std::cerr << "skipping duplicate number: " << number << std::endl;
 			continue;
-		}
 		numbers.push_back(number);
 
 	}
@@ -62,12 +54,17 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 
 int main(int argc, char *argv[])
 {
-	if (argc != 2)
+	if (argc < 2)
 		return (usage());
 
-	std::stringstream	input(argv[1]);
+	std::stringstream	input;
 	std::vector<size_t>	numbers;
 
+	input << argv[1];
+	for (int i = 2; i < argc; ++i)
+	{
+		input << " " << argv[i];
+	}
 	int parsingStatus = parsing(input, numbers);
 
 	if (parsingStatus != 0)

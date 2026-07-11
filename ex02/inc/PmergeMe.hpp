@@ -20,7 +20,6 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡇⠹⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡿⠁⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ \n\
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣤⣞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢢⣀⣠⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ \n\
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠲⢤⣀⣀⠀⢀⣀⣀⠤⠒⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ \n\
-segmentation fault (core dumped)\
 "
 
 #define ASCII_ART_NAN "\
@@ -83,6 +82,7 @@ class PmergeMe
 	public:
 		long getElapsedTime() const;
 		PmergeMe(std::vector<size_t> &numbers);
+		~PmergeMe();
 
 		template<typename T> T fordJohnson(T data)
 		{
@@ -143,6 +143,8 @@ class PmergeMe
 		std::deque<size_t> numbers_deque;
 		PmergeMe();
 		PmergeMe(PmergeMe &other);
+		PmergeMe &operator=(PmergeMe &other);
+
 
 		template <typename T> struct CompareByValue
 		{
