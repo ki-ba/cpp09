@@ -1,7 +1,4 @@
 #include "RPN.hpp"
-#include <cctype>
-#include <cstring>
-#include <stdexcept>
 
 RPN::RPN() {}
 RPN::RPN(const RPN &other) : expr(other.expr) {}
