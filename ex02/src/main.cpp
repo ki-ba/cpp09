@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <limits.h>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -21,6 +22,17 @@ int parsing(std::stringstream &input, std::vector<size_t> &numbers)
 	{
 		std::stringstream number_stream(number_str);
 		number_stream >> number;
+		if (number > INT_MAX)
+		{
+			std::cout << "number too big" << std::endl;
+			return (PARSING_ERROR);
+		}
+		if (static_cast<size_t>(number) != number)
+		{
+			std::cout << ASCII_ART_NAN << std::endl;
+			std::cout << "not an integer" << std::endl;
+			return (PARSING_ERROR);
+		}
 		if (number_stream.fail() || !number_stream.eof())
 		{
 			std::cout << ASCII_ART_NAN << std::endl;
