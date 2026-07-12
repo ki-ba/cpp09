@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BitcoinExchange.cpp                                       :+:      :+:    :+:   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbarru <kbarru@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 10:01:11 by kbarru            #+#    #+#             */
-/*   Updated: 2026/05/05 16:22:28 by kbarru           ###   ########lyon.fr   */
+/*   Updated: 2026/07/12 12:20:17 by kbarru           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 BitcoinExchange::BitcoinExchange() {}
 
@@ -124,7 +127,15 @@ void BitcoinExchange::addEntry(const std::string &entry)
 double	BitcoinExchange::getBTCPrice(const std::string &date) const
 {
 	std::map<std::string, double>::const_iterator it = this->prices.lower_bound(date);
-	if (date != it->first)
+
+	if (it == this->prices.end())
+	{
+		if (this->prices.empty())
+			throw std::runtime_error("No known BTC price for that date");
+		--it;
+		std::cout << "price found :" << it->second << std::endl;
+	}
+	else if (date != it->first)
 	{
 		if (it == this->prices.begin())
 			throw std::runtime_error("No known BTC price for that date");
@@ -136,6 +147,7 @@ double	BitcoinExchange::getBTCPrice(const std::string &date) const
 double	BitcoinExchange::getValue(const std::string &date, const double &amount) const
 {
 	double	btcValue;
+
 	try
 	{
 		btcValue = this->getBTCPrice(date);
@@ -161,7 +173,7 @@ void BitcoinExchange::readAmounts(const std::string &filename)
 		double		amount = 0;
 		double		total = 0;
 		bool		is_first_line = true;
-		std::string str_date;
+		std::string str_date = "";
 
 		if (is_first_line && (cur_line == "date | value" || cur_line == "date|value"))
 		{

@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbarru <kbarru@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/12 11:57:33 by kbarru            #+#    #+#             */
+/*   Updated: 2026/07/12 12:16:23 by kbarru           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
 # include <map>
+# include <string>
 
 class BitcoinExchange
 {
@@ -19,7 +32,7 @@ public:
 	void	displayEntries();
 	double	getBTCPrice(const std::string &date) const;
 	double	getValue(const std::string &date, const double &amount) const;
-	static bool validateTime(const std::string &time_str);
+	bool validateTime(const std::string &time_str);
 	void extractComponents(std::string &line, std::string &str_date, double &amount);
 
 	void readDatabase(const std::string &filename);

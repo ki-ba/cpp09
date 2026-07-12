@@ -1,6 +1,6 @@
 NAME = btc
 CC = c++
-FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP -fsanitize=address
+FLAGS = -Wall -Wextra -Werror $(INCLUDES) $(STD) -MMD -MP
 STD = -std=c++98
 
 SRC_DIR = src/
@@ -35,6 +35,6 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cpp | $(OBJ_DIR)
-	$(CC) $(FLAGS) -I$(INC_DIR) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 -include $(DEPS)
